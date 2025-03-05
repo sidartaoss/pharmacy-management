@@ -53,8 +53,8 @@ A aplicação utiliza **RabbitMQ** para tratar eventos de domínio, garantindo q
 
 1. Clone o repositório da aplicação:
    ```sh
-   git clone https://github.com/sidartaoss/backend-application.git
-   cd backend-application
+   git clone https://github.com/sidartaoss/pharmacy-management.git
+   cd pharmacy-management
    ```
 
 2. Instale as dependências do projeto:
@@ -79,5 +79,5 @@ A aplicação estará disponível no endpoint padrão: `http://localhost:8080/ap
 Acesse a documentação do Swagger para explorar os endpoints da aplicação:
 
 ```
-http://localhost:8080/api/swagger-ui.html
+http://localhost:8080/api/swagger-ui/index.html
 ```
