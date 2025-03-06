@@ -88,7 +88,7 @@ A aplicação conta com testes unitários para os casos de uso e testes de integ
 
 Acesse a documentação dos endpoints da aplicação através do Swagger: [http://localhost:8080/api/swagger-ui/index.html](http://localhost:8080/api/swagger-ui/index.html)
 
-## Tecnologias Utilizadas
+### Tecnologias Utilizadas
 
 - **Java 21**: Linguagem de alto desempenho.
 - **Spring Boot**: Framework para APIs e microserviços.
