@@ -35,7 +35,6 @@ public enum Json {
                     SerializationFeature.WRITE_DATES_AS_TIMESTAMPS
             )
             .modules(new JavaTimeModule(), new Jdk8Module())
-            .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
             .build();
 
     private static <T> T invoke(final Callable<T> callable) {

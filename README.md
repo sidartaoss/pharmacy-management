@@ -1,45 +1,51 @@
-# Pharmacy Management Application
+# Pharmacy Management
 
 ## Requisitos Funcionais
 
-1. **Operações CRUD de Clientes (Clients)**
-    - Criar, Ler, Atualizar e Deletar clientes.
+1. **CRUD de Clientes (Clients)**
+   - Cadastro de novos clientes.
+   - Atualização de informações dos clientes.
+   - Listagem de clientes.
+   - Remoção de clientes.
 
-2. **Operações CRUD de Medicamentos (Medications)**
-    - Criar, Ler, Atualizar e Deletar medicamentos.
+2. **CRUD de Medicamentos (Medications)**
+   - Cadastro de novos medicamentos.
+   - Atualização de informações dos medicamentos.
+   - Listagem de medicamentos.
+   - Remoção de medicamentos.
 
 3. **Serviço de Listagem de Assinaturas (Subscriptions)**
-    - Listar todos os medicamentos contínuos de um cliente fornecendo o email do cliente.
+   - Listagem de assinaturas de medicamentos contínuos de um cliente, informando o email do cliente.
 
 ## Requisitos Não-Funcionais
 
 1. **Mensageria**
-    - Utiliza RabbitMQ para mensageria, pois a aplicação é baseada em arquitetura orientada a eventos (event-driven architecture), garantindo escalabilidade e confiabilidade no tratamento de eventos de domínio.
+   - Utilização do RabbitMQ para tratar eventos de domínio da aplicação, garantindo escalabilidade e desacoplamento entre os serviços.
 
 2. **Banco de Dados**
-    - Utiliza MongoDB para armazenamento de dados, proporcionando alta escalabilidade e flexibilidade no manuseio de grandes volumes de dados.
+   - Utilização do MongoDB, que oferece alta escalabilidade e flexibilidade no armazenamento de dados.
 
-## Arquitetura
+## Arquitetura da Aplicação
 
-A aplicação segue os princípios da **Clean Architecture**, garantindo separação de responsabilidades, manutenibilidade e testabilidade.
+A arquitetura da aplicação é baseada em **Clean Architecture**, que promove a separação de responsabilidades e facilita a manutenção e evolução do sistema.
 
-## Arquitetura Orientada a Eventos
+## Event Driven Architecture
 
-A aplicação utiliza **RabbitMQ** para tratar eventos de domínio, garantindo que eventos como a associação de medicamentos sejam processados de forma assíncrona e eficiente.
+A aplicação utiliza **Event Driven Architecture** com RabbitMQ para tratar os eventos de domínio, garantindo que as ações sejam processadas de forma assíncrona e escalável.
 
 ## Fluxo Principal da Aplicação
 
 1. **Cadastro do Cliente**
-    - Um novo cliente é registrado no sistema.
+   - O cliente é cadastrado no sistema.
 
 2. **Cadastro do Medicamento**
-    - Um novo medicamento é registrado no sistema.
+   - O medicamento é cadastrado no sistema.
 
-3. **Assinatura de Medicamento Contínuo**
-    - Quando o medicamento de um cliente é marcado como de uso contínuo, uma assinatura é criada. Esta assinatura inclui o dia de renovação mensal, indicando quando o medicamento deve ser comprado novamente.
+3. **Criação de Assinatura**
+   - Sempre que o medicamento do cliente for de uso contínuo, é criada uma assinatura do medicamento no sistema, informando o dia do mês de renovação da assinatura.
 
-4. **Serviço de Listagem de Assinaturas**
-    - Ao fornecer o email do cliente, o serviço lista todos os medicamentos contínuos assinados pelo cliente.
+4. **Listagem de Assinaturas**
+   - A partir do serviço de listagem de assinaturas, ao informar o email do cliente, é possível listar todos os medicamentos contínuos do cliente.
 
 ## Como Subir a Aplicação
 
@@ -52,32 +58,32 @@ A aplicação utiliza **RabbitMQ** para tratar eventos de domínio, garantindo q
 ### Passo a Passo
 
 1. Clone o repositório da aplicação:
-   ```sh
+   ```bash
    git clone https://github.com/sidartaoss/pharmacy-management.git
    cd pharmacy-management
    ```
 
 2. Instale as dependências do projeto:
-   ```sh
+   ```bash
    mvn clean install
    ```
 
-3. Certifique-se de que RabbitMQ e MongoDB estão em execução:
-   ```sh
+3. Rode o comando do Docker para subir os serviços necessários:
+   ```bash
    docker compose up -d
    ```
 
 4. Rode a aplicação localmente com o comando:
-   ```sh
+   ```bash
    mvn spring-boot:run
    ```
 
-A aplicação estará disponível no endpoint padrão: `http://localhost:8080/api/actuator/health`
+A aplicação estará disponível no endpoint padrão: [http://localhost:8080/api/actuator/health](http://localhost:8080/api/actuator/health)
 
-## URL do Swagger
+## Testes
 
-Acesse a documentação do Swagger para explorar os endpoints da aplicação:
+A aplicação conta com testes unitários para os casos de uso e testes de integração para a camada de API REST.
 
-```
-http://localhost:8080/api/swagger-ui/index.html
-```
+## Documentação da API
+
+Acesse a documentação dos endpoints da aplicação através do Swagger: [http://localhost:8080/api/swagger-ui/index.html](http://localhost:8080/api/swagger-ui/index.html)

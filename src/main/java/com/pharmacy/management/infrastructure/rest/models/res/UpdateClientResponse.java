@@ -1,4 +1,4 @@
 package com.pharmacy.management.infrastructure.rest.models.res;
 
-public record UpdateClientResponse(String cliendId) {
+public record UpdateClientResponse(String clientId) {
 }
