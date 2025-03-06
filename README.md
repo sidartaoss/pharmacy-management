@@ -90,10 +90,10 @@ Acesse a documentação dos endpoints da aplicação através do Swagger: [http:
 
 ### Tecnologias Utilizadas
 
-- **Java 21**: Linguagem de alto desempenho.
-- **Spring Boot**: Framework para APIs e microserviços.
-- **Maven**: Gerenciamento de dependências e automação de builds.
-- **Docker**: Plataforma para criar e gerenciar contêineres.
-- **RabbitMQ**: Sistema de mensageria para comunicação assíncrona e eventos.
-- **MongoDB**: Banco de dados NoSQL, escalável e de alta performance.
-- **Swagger**: Ferramenta para documentação e testes de APIs REST.
+- **Java 21**
+- **Spring Boot**
+- **Maven**
+- **Docker**
+- **RabbitMQ**
+- **MongoDB**
+- **Swagger**
