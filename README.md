@@ -87,3 +87,13 @@ A aplicação conta com testes unitários para os casos de uso e testes de integ
 ## Documentação da API
 
 Acesse a documentação dos endpoints da aplicação através do Swagger: [http://localhost:8080/api/swagger-ui/index.html](http://localhost:8080/api/swagger-ui/index.html)
+
+## Tecnologias Utilizadas
+
+- **Java 21**: Linguagem de programação para alto desempenho.
+- **Spring Boot**: Framework para criação rápida de APIs e microsserviços.
+- **Maven**: Gerenciamento de dependências e automação de builds.
+- **Docker**: Plataforma para criar e gerenciar contêineres.
+- **RabbitMQ**: Sistema de mensageria para comunicação assíncrona e eventos.
+- **MongoDB**: Banco de dados NoSQL, escalável e de alta performance.
+- **Swagger**: Ferramenta para documentação e testes de APIs REST.
