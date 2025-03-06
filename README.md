@@ -90,10 +90,10 @@ Acesse a documentação dos endpoints da aplicação através do Swagger: [http:
 
 ### Tecnologias Utilizadas
 
-- **Java 21**
-- **Spring Boot**
-- **Maven**
-- **Docker**
-- **RabbitMQ**
-- **MongoDB**
-- **Swagger**
+- Java 21
+- Spring Boot
+- Maven
+- Docker
+- RabbitMQ
+- MongoDB
+- Swagger
