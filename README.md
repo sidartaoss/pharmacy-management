@@ -90,8 +90,8 @@ Acesse a documentação dos endpoints da aplicação através do Swagger: [http:
 
 ## Tecnologias Utilizadas
 
-- **Java 21**: Linguagem de programação para alto desempenho.
-- **Spring Boot**: Framework para criação rápida de APIs e microsserviços.
+- **Java 21**: Linguagem de alto desempenho.
+- **Spring Boot**: Framework para APIs e microserviços.
 - **Maven**: Gerenciamento de dependências e automação de builds.
 - **Docker**: Plataforma para criar e gerenciar contêineres.
 - **RabbitMQ**: Sistema de mensageria para comunicação assíncrona e eventos.
