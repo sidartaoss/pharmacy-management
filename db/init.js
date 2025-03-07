@@ -2,12 +2,20 @@ db = connect("mongodb://localhost:27017/admin");
 
 db = db.getSiblingDB("app_database");
 
+db = connect("mongodb://localhost:27017/admin");
+
+db = db.getSiblingDB("app_database");
+
 db.createCollection("clients", {
   validator: {
     $jsonSchema: {
       bsonType: "object",
       required: ["name", "email", "cpf", "phoneNumber"],
       properties: {
+        id: {
+          bsonType: "string",
+          description: "must be a string and is the unique identifier for the client"
+        },
         name: {
           bsonType: "string",
           description: "Nome do cliente (obrigatório)"
@@ -25,6 +33,13 @@ db.createCollection("clients", {
         phoneNumber: {
           bsonType: "string",
           description: "Número de telefone do cliente (obrigatório)"
+        },
+        medications: {
+          bsonType: "array",
+          items: {
+            bsonType: "object",
+            description: "Lista de medicamentos do cliente"
+          }
         }
       }
     }

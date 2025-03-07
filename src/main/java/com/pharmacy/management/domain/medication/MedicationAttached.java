@@ -10,20 +10,17 @@ public record MedicationAttached(
         String type,
         String clientId,
         String medicationId,
-        Integer monthlyRenewalDay,
         Instant occurredOn
 ) implements DomainEvent {
 
     public MedicationAttached(
             String clientId,
-            String medicationId,
-            Integer monthlyRenewalDay
+            String medicationId
     ) {
         this(UUID.randomUUID().toString(),
                 "medication.attached",
                 clientId,
                 medicationId,
-                monthlyRenewalDay,
                 Instant.now());
     }
 }

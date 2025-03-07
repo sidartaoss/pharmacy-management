@@ -1,4 +1,4 @@
-package com.pharmacy.management.infrastructure.jpa.entities;
+package com.pharmacy.management.infrastructure.mongodb.documents;
 
 import com.pharmacy.management.domain.subscription.Subscription;
 import org.springframework.data.annotation.Id;
@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.math.BigDecimal;
 
 @Document(collection = "subscriptions")
-public class SubscriptionEntity {
+public class SubscriptionDocument {
 
     @Id
     private String id;
@@ -22,10 +22,10 @@ public class SubscriptionEntity {
     private BigDecimal medicationDosage;
     private Integer medicationMonthlyRenewalDay;
 
-    public SubscriptionEntity() {
+    public SubscriptionDocument() {
     }
 
-    private SubscriptionEntity(
+    private SubscriptionDocument(
             String id,
             String clientId,
             String clientName,
@@ -49,8 +49,8 @@ public class SubscriptionEntity {
         this.medicationMonthlyRenewalDay = medicationMonthlyRenewalDay;
     }
 
-    public static SubscriptionEntity from(final Subscription aSubscription) {
-        return new SubscriptionEntity(
+    public static SubscriptionDocument from(final Subscription aSubscription) {
+        return new SubscriptionDocument(
                 aSubscription.id(),
                 aSubscription.clientId(),
                 aSubscription.clientName(),
@@ -65,7 +65,7 @@ public class SubscriptionEntity {
     }
 
     public Subscription toDomain() {
-        return new Subscription(
+        return Subscription.newSubscription(
                 this.id,
                 this.clientId,
                 this.clientName,

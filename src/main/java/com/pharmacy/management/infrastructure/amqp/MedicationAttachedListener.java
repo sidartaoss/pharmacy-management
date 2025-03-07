@@ -28,11 +28,9 @@ public class MedicationAttachedListener {
     public void onMedicationAttachedMessage(@Payload final String message) {
         final var aResult = Json.readValue(message, MedicationAttachedResult.class);
         log.info("[message:medication.attached] [payload:{}]", message);
-        record Input(String clientId, String medicationId, Integer monthlyRenewalDay)
-                implements CreateSubscription.Input {
+        record Input(String clientId, String medicationId) implements CreateSubscription.Input {
         }
-        this.createSubscription.execute(new Input(aResult.clientId(), aResult.medicationId(),
-                aResult.monthlyRenewalDay()));
+        this.createSubscription.execute(new Input(aResult.clientId(), aResult.medicationId()));
     }
 
 

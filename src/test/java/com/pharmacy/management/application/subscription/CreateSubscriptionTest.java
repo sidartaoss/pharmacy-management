@@ -29,8 +29,7 @@ class CreateSubscriptionTest {
         clientRepository = mock(ClientRepository.class);
         medicationRepository = mock(MedicationRepository.class);
         subscriptionRepository = mock(SubscriptionRepository.class);
-        createSubscription = new DefaultCreateSubscription(clientRepository, medicationRepository,
-                subscriptionRepository);
+        createSubscription = new DefaultCreateSubscription(clientRepository, medicationRepository, subscriptionRepository);
     }
 
     @Test
@@ -39,15 +38,10 @@ class CreateSubscriptionTest {
         CreateSubscription.Input input = mock(CreateSubscription.Input.class);
         when(input.clientId()).thenReturn("1");
         when(input.medicationId()).thenReturn("101");
-        when(input.monthlyRenewalDay()).thenReturn(15);
 
-        final var client = Client.newClient("1", "John Doe", "john.doe@example.com", "27227066100",
-                "1234567890");
-        final var medication = Medication.newMedication("101", "Medication A", "Brand A",
-                new BigDecimal("10.00"), new BigDecimal("500"));
-        final var subscription = new Subscription("1", "1", "John Doe",
-                "john.doe@example.com", "1234567890", "101",
-                "Medication A", "Brand A", new BigDecimal("500"), 15);
+        final var client = Client.newClient("1", "John Doe", "john.doe@example.com", "27227066100", "1234567890");
+        final var medication = Medication.newMedication("101", "Medication A", "Brand A", new BigDecimal("10.00"), new BigDecimal("500"));
+        final var subscription = Subscription.newSubscription("1", "1", "John Doe", "john.doe@example.com", "1234567890", "101", "Medication A", "Brand A", new BigDecimal("500"), 7);
 
         when(clientRepository.findById("1")).thenReturn(Optional.of(client));
         when(medicationRepository.findById("101")).thenReturn(Optional.of(medication));
@@ -68,7 +62,6 @@ class CreateSubscriptionTest {
         CreateSubscription.Input input = mock(CreateSubscription.Input.class);
         when(input.clientId()).thenReturn("1");
         when(input.medicationId()).thenReturn("101");
-        when(input.monthlyRenewalDay()).thenReturn(15);
 
         when(clientRepository.findById("1")).thenReturn(Optional.empty());
 
@@ -83,7 +76,6 @@ class CreateSubscriptionTest {
         CreateSubscription.Input input = mock(CreateSubscription.Input.class);
         when(input.clientId()).thenReturn("1");
         when(input.medicationId()).thenReturn("101");
-        when(input.monthlyRenewalDay()).thenReturn(15);
 
         Client client = Client.newClient("1", "John Doe", "john.doe@example.com", "27227066100", "1234567890");
 

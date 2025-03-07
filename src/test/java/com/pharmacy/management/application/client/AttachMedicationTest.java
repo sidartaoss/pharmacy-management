@@ -2,6 +2,8 @@ package com.pharmacy.management.application.client;
 
 import com.pharmacy.management.application.client.impl.DefaultAttachMedication;
 import com.pharmacy.management.domain.client.Client;
+import com.pharmacy.management.domain.client.ClientMedication;
+import com.pharmacy.management.domain.client.ClientMedicationRepository;
 import com.pharmacy.management.domain.client.ClientRepository;
 import com.pharmacy.management.domain.exceptions.NotFoundException;
 import com.pharmacy.management.domain.medication.Medication;
@@ -21,13 +23,15 @@ class AttachMedicationTest {
 
     private ClientRepository clientRepository;
     private MedicationRepository medicationRepository;
+    private ClientMedicationRepository clientMedicationRepository;
     private DefaultAttachMedication attachMedication;
 
     @BeforeEach
     void setUp() {
         clientRepository = mock(ClientRepository.class);
         medicationRepository = mock(MedicationRepository.class);
-        attachMedication = new DefaultAttachMedication(medicationRepository, clientRepository);
+        clientMedicationRepository = mock(ClientMedicationRepository.class);
+        attachMedication = new DefaultAttachMedication(clientRepository, clientMedicationRepository);
     }
 
     @Test
@@ -41,9 +45,11 @@ class AttachMedicationTest {
 
         Client client = Client.newClient("1", "John Doe", "john.doe@example.com", "12345678901", "1234567890");
         Medication medication = Medication.newMedication("101", "Medication A", "Description A", BigDecimal.valueOf(9.99), BigDecimal.valueOf(100));
+        ClientMedication clientMedication = ClientMedication.newClientMedication("1", client.id(), medication.id(), expectedMonthlyRenewalDay);
 
         when(clientRepository.findById("1")).thenReturn(Optional.of(client));
         when(medicationRepository.findById("101")).thenReturn(Optional.of(medication));
+        when(clientMedicationRepository.findByClientIdAndMedicationId("1", "101")).thenReturn(Optional.of(clientMedication));
 
         // Act
         attachMedication.execute(input);
@@ -51,10 +57,11 @@ class AttachMedicationTest {
         // Assert
         ArgumentCaptor<Client> clientCaptor = ArgumentCaptor.forClass(Client.class);
         verify(clientRepository).save(clientCaptor.capture());
-        Client updatedClient = clientCaptor.getValue();
-        assertEquals(client.id(), updatedClient.allMedications().iterator().next().clientId());
-        assertEquals(medication.id(), updatedClient.allMedications().iterator().next().medicationId());
-        assertEquals(expectedMonthlyRenewalDay, updatedClient.allMedications().iterator().next().monthlyRenewalDay());
+        final var savedClient = clientCaptor.getValue();
+        assertEquals("1", savedClient.id());
+        assertEquals("101", savedClient.allMedications().stream().findFirst().orElseThrow().medicationId());
+        assertEquals(expectedMonthlyRenewalDay, savedClient.allMedications().stream().findFirst().orElseThrow()
+                .monthlyRenewalDay());
     }
 
     @Test
@@ -88,9 +95,9 @@ class AttachMedicationTest {
     void testAttachMedicationWithNullRepositories() {
         // Arrange
         ClientRepository nullClientRepository = null;
-        MedicationRepository nullMedicationRepository = null;
+        ClientMedicationRepository nullClientMedicationRepository = null;
 
         // Act & Assert
-        assertThrows(NullPointerException.class, () -> new DefaultAttachMedication(nullMedicationRepository, nullClientRepository));
+        assertThrows(NullPointerException.class, () -> new DefaultAttachMedication(nullClientRepository, nullClientMedicationRepository));
     }
 }

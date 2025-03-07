@@ -10,8 +10,6 @@ public abstract class CreateSubscription extends
         String clientId();
 
         String medicationId();
-
-        Integer monthlyRenewalDay();
     }
 
     public interface Output {

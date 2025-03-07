@@ -15,7 +15,7 @@ public class Subscription {
     private BigDecimal medicationDosage;
     private Integer medicationMonthlyRenewalDay;
 
-    public Subscription(
+    private Subscription(
             String id,
             String clientId,
             String clientName,
@@ -37,6 +37,32 @@ public class Subscription {
         this.medicationBrand = medicationBrand;
         this.medicationDosage = medicationDosage;
         this.medicationMonthlyRenewalDay = medicationMonthlyRenewalDay;
+    }
+
+    public static Subscription newSubscription(
+            final String id,
+            final String clientId,
+            final String clientName,
+            final String clientEmail,
+            final String clientPhoneNumber,
+            final String medicationId,
+            final String medicationName,
+            final String medicationBrand,
+            final BigDecimal medicationDosage,
+            final Integer medicationMonthlyRenewalDay
+    ) {
+        return new Subscription(
+                id,
+                clientId,
+                clientName,
+                clientEmail,
+                clientPhoneNumber,
+                medicationId,
+                medicationName,
+                medicationBrand,
+                medicationDosage,
+                medicationMonthlyRenewalDay
+        );
     }
 
     public String id() {

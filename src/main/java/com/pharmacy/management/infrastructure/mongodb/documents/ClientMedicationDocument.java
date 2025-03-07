@@ -1,11 +1,11 @@
-package com.pharmacy.management.infrastructure.jpa.entities;
+package com.pharmacy.management.infrastructure.mongodb.documents;
 
 import com.pharmacy.management.domain.client.ClientMedication;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "clients_medications")
-public class ClientMedicationEntity {
+public class ClientMedicationDocument {
 
     @Id
     private String id;
@@ -16,33 +16,45 @@ public class ClientMedicationEntity {
 
     private Integer monthlyRenewalDay;
 
-    private ClientEntity client;
-
-    public ClientMedicationEntity() {
+    public ClientMedicationDocument() {
     }
 
-    private ClientMedicationEntity(
+    private ClientMedicationDocument(
             final String id,
             final String clientId,
             final String medicationId,
-            final Integer monthlyRenewalDay,
-            final ClientEntity client
+            final Integer monthlyRenewalDay
     ) {
         this.id = id;
         this.clientId = clientId;
         this.medicationId = medicationId;
         this.monthlyRenewalDay = monthlyRenewalDay;
-        this.client = client;
     }
 
-    public static ClientMedicationEntity of(
-            final ClientEntity aClient, final ClientMedication aClientMedication) {
-        return new ClientMedicationEntity(
+    public static ClientMedicationDocument newClientMedicationDocument(
+            final String id,
+            final String clientId,
+            final String medicationId,
+            final Integer monthlyRenewalDay
+    ) {
+        return new ClientMedicationDocument(id, clientId, medicationId, monthlyRenewalDay);
+    }
+
+    public ClientMedication toDomain() {
+        return ClientMedication.newClientMedication(
+                getId(),
+                getClientId(),
+                getMedicationId(),
+                getMonthlyRenewalDay()
+        );
+    }
+
+    public static ClientMedicationDocument of(final ClientMedication aClientMedication) {
+        return new ClientMedicationDocument(
                 aClientMedication.id(),
                 aClientMedication.clientId(),
                 aClientMedication.medicationId(),
-                aClientMedication.monthlyRenewalDay(),
-                aClient
+                aClientMedication.monthlyRenewalDay()
         );
     }
 
@@ -76,13 +88,5 @@ public class ClientMedicationEntity {
 
     public void setMonthlyRenewalDay(Integer monthlyRenewalDay) {
         this.monthlyRenewalDay = monthlyRenewalDay;
-    }
-
-    public ClientEntity getClient() {
-        return client;
-    }
-
-    public void setClient(ClientEntity client) {
-        this.client = client;
     }
 }

@@ -2,6 +2,7 @@ package com.pharmacy.management.application.subscription.impl;
 
 import com.pharmacy.management.application.subscription.CreateSubscription;
 import com.pharmacy.management.domain.client.Client;
+import com.pharmacy.management.domain.client.ClientMedication;
 import com.pharmacy.management.domain.client.ClientRepository;
 import com.pharmacy.management.domain.exceptions.NotFoundException;
 import com.pharmacy.management.domain.medication.Medication;
@@ -36,16 +37,15 @@ public class DefaultCreateSubscription extends CreateSubscription {
                 .orElseThrow(notFound(Medication.class, anIn.medicationId()));
 
         final var aSubscription = this.subscriptionRepository.save(
-                this.newSubscriptionWith(anIn, aClient, aMedication));
+                this.newSubscriptionWith(aClient, aMedication));
         return new StdOutput(aSubscription.id());
     }
 
     private Subscription newSubscriptionWith(
-            final Input anIn,
             final Client aClient,
             final Medication aMedication
     ) {
-        return new Subscription(
+        return Subscription.newSubscription(
                 this.subscriptionRepository.nextId(),
                 aClient.id(),
                 aClient.name(),
@@ -55,7 +55,12 @@ public class DefaultCreateSubscription extends CreateSubscription {
                 aMedication.name(),
                 aMedication.brand(),
                 aMedication.dosage(),
-                anIn.monthlyRenewalDay()
+                aClient.allMedications().stream()
+                        .filter(m -> m.clientId().equals(aClient.id())
+                                && m.medicationId().equals(aMedication.id()))
+                        .findFirst()
+                        .map(ClientMedication::monthlyRenewalDay)
+                        .orElse(null)
         );
     }
 

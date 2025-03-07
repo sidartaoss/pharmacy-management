@@ -2,8 +2,8 @@ package com.pharmacy.management.infrastructure.configuration.usecases;
 
 import com.pharmacy.management.application.client.*;
 import com.pharmacy.management.application.client.impl.*;
+import com.pharmacy.management.domain.client.ClientMedicationRepository;
 import com.pharmacy.management.domain.client.ClientRepository;
-import com.pharmacy.management.domain.medication.MedicationRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -36,7 +36,9 @@ public class ClientUseCaseConfig {
     }
 
     @Bean
-    public AttachMedication attachMedication(final MedicationRepository medicationRepository, final ClientRepository clientRepository) {
-        return new DefaultAttachMedication(medicationRepository, clientRepository);
+    public AttachMedication attachMedication(
+            final ClientRepository clientRepository,
+            final ClientMedicationRepository clientMedicationRepository) {
+        return new DefaultAttachMedication(clientRepository, clientMedicationRepository);
     }
 }

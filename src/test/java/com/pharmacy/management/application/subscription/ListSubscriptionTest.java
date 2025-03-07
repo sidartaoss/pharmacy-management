@@ -30,8 +30,8 @@ class ListSubscriptionTest {
         ListSubscription.Input input = mock(ListSubscription.Input.class);
         when(input.clientEmail()).thenReturn("john.doe@example.com");
 
-        Subscription subscription1 = new Subscription("1", "1", "John Doe", "john.doe@example.com", "1234567890", "101", "Medication A", "Brand A", new BigDecimal("500"), 15);
-        Subscription subscription2 = new Subscription("2", "1", "John Doe", "john.doe@example.com", "1234567890", "102", "Medication B", "Brand B", new BigDecimal("250"), 20);
+        Subscription subscription1 = Subscription.newSubscription("1", "1", "John Doe", "john.doe@example.com", "1234567890", "101", "Medication A", "Brand A", new BigDecimal("500"), 15);
+        Subscription subscription2 = Subscription.newSubscription("2", "1", "John Doe", "john.doe@example.com", "1234567890", "102", "Medication B", "Brand B", new BigDecimal("250"), 20);
 
         Set<Subscription> subscriptions = Set.of(subscription1, subscription2);
         when(subscriptionRepository.listBy("john.doe@example.com")).thenReturn(subscriptions);

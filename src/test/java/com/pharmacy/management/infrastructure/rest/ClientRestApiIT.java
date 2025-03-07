@@ -2,6 +2,7 @@ package com.pharmacy.management.infrastructure.rest;
 
 import com.pharmacy.management.application.client.*;
 import com.pharmacy.management.infrastructure.configuration.json.Json;
+import com.pharmacy.management.infrastructure.mediator.AttachMediator;
 import com.pharmacy.management.infrastructure.rest.controllers.ClientController;
 import com.pharmacy.management.infrastructure.rest.models.req.CreateClientRequest;
 import com.pharmacy.management.infrastructure.rest.models.req.SubscribeMedicationRequest;
@@ -44,6 +45,9 @@ class ClientRestApiIT {
 
     @MockBean
     private AttachMedication attachMedication;
+
+    @MockBean
+    private AttachMediator attachMediator;
 
     @Test
     void testCreateClient() throws Exception {

@@ -2,6 +2,7 @@ package com.pharmacy.management.infrastructure.rest.controllers;
 
 import com.pharmacy.management.application.client.*;
 import com.pharmacy.management.domain.utils.CollectionUtils;
+import com.pharmacy.management.infrastructure.mediator.AttachMediator;
 import com.pharmacy.management.infrastructure.rest.ClientRestApi;
 import com.pharmacy.management.infrastructure.rest.models.req.CreateClientRequest;
 import com.pharmacy.management.infrastructure.rest.models.req.SubscribeMedicationRequest;
@@ -24,7 +25,7 @@ public class ClientController implements ClientRestApi {
     private final ListClient listClient;
     private final UpdateClient updateClient;
     private final DeleteClient deleteClient;
-    private final AttachMedication attachMedication;
+    private final AttachMediator attachMediator;
 
     public ClientController(
             final CreateClient createClient,
@@ -32,13 +33,13 @@ public class ClientController implements ClientRestApi {
             final ListClient listClient,
             final UpdateClient updateClient,
             final DeleteClient deleteClient,
-            final AttachMedication attachMedication) {
+            final AttachMediator attachMediator) {
         this.createClient = Objects.requireNonNull(createClient);
         this.getClientById = Objects.requireNonNull(getClientById);
         this.listClient = Objects.requireNonNull(listClient);
         this.updateClient = Objects.requireNonNull(updateClient);
         this.deleteClient = Objects.requireNonNull(deleteClient);
-        this.attachMedication = Objects.requireNonNull(attachMedication);
+        this.attachMediator = Objects.requireNonNull(attachMediator);
     }
 
     @Override
@@ -86,6 +87,6 @@ public class ClientController implements ClientRestApi {
         record Input(String clientId, String medicationId,
                      Integer monthlyRenewalDay) implements AttachMedication.Input {
         }
-        this.attachMedication.execute(new Input(id, req.medicationId(), req.monthlyRenewalDay()));
+        this.attachMediator.attachMedication(new Input(id, req.medicationId(), req.monthlyRenewalDay()));
     }
 }

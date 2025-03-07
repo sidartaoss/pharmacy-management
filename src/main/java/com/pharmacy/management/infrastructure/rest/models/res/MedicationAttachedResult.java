@@ -7,7 +7,6 @@ public record MedicationAttachedResult(
         String type,
         String clientId,
         String medicationId,
-        Integer monthlyRenewalDay,
         Instant occurredOn
 ) {
 }

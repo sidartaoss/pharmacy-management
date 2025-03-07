@@ -1,4 +1,4 @@
-package com.pharmacy.management.infrastructure.jpa.entities;
+package com.pharmacy.management.infrastructure.mongodb.documents;
 
 import com.pharmacy.management.domain.medication.Medication;
 import org.springframework.data.annotation.Id;
@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.math.BigDecimal;
 
 @Document(collection = "medications")
-public class MedicationEntity {
+public class MedicationDocument {
 
     @Id
     private String id;
@@ -20,10 +20,10 @@ public class MedicationEntity {
 
     private BigDecimal dosage;
 
-    public MedicationEntity() {
+    public MedicationDocument() {
     }
 
-    private MedicationEntity(
+    private MedicationDocument(
             final String id,
             final String name,
             final String brand,
@@ -37,8 +37,8 @@ public class MedicationEntity {
         this.dosage = dosage;
     }
 
-    public static MedicationEntity from(final Medication aMedication) {
-        return new MedicationEntity(
+    public static MedicationDocument from(final Medication aMedication) {
+        return new MedicationDocument(
                 aMedication.id(),
                 aMedication.name(),
                 aMedication.brand(),

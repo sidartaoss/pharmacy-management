@@ -34,21 +34,25 @@ public class Client {
     }
 
     public void attachMedication(
+            final String clientMedicationId,
             final String medicationId,
             final Integer monthlyRenewalDay
     ) {
         final var aMedication = ClientMedication.newClientMedication(
+                clientMedicationId,
                 id(),
                 medicationId,
                 monthlyRenewalDay);
         this.medications.add(aMedication);
-        this.registerEvent(new MedicationAttached(
-                id(), medicationId, monthlyRenewalDay)
-        );
+        this.registerEvent(new MedicationAttached(id(), medicationId));
     }
 
     public static Client newClient(String id, String name, String email, String cpf, String phoneNumber) {
         return new Client(id, name, email, cpf, phoneNumber, new HashSet<>());
+    }
+
+    public static Client with(String id, String name, String email, String cpf, String phoneNumber, Set<ClientMedication> medications) {
+        return new Client(id, name, email, cpf, phoneNumber, medications);
     }
 
     public String id() {

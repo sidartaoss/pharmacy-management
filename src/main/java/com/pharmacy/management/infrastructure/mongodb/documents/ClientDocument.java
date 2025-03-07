@@ -1,4 +1,4 @@
-package com.pharmacy.management.infrastructure.jpa.entities;
+package com.pharmacy.management.infrastructure.mongodb.documents;
 
 import com.pharmacy.management.domain.client.Client;
 import com.pharmacy.management.domain.client.ClientMedication;
@@ -7,9 +7,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Document(collection = "clients")
-public class ClientEntity {
+public class ClientDocument {
 
     @Id
     private String id;
@@ -22,13 +23,13 @@ public class ClientEntity {
 
     private String phoneNumber;
 
-    private Set<ClientMedicationEntity> medications;
+    private Set<ClientMedicationDocument> medications;
 
-    public ClientEntity() {
+    public ClientDocument() {
         this.medications = HashSet.newHashSet(0);
     }
 
-    private ClientEntity(String id, String name, String email, String cpf, String phoneNumber) {
+    private ClientDocument(String id, String name, String email, String cpf, String phoneNumber) {
         this();
         this.id = id;
         this.name = name;
@@ -37,23 +38,28 @@ public class ClientEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    public static ClientEntity of(final Client aClient) {
-        return new ClientEntity(
+    public static ClientDocument of(final Client aClient) {
+        final var aDocument = new ClientDocument(
                 aClient.id(),
                 aClient.name(),
                 aClient.email(),
                 aClient.cpf(),
                 aClient.phoneNumber()
         );
+        aClient.allMedications().forEach(aDocument::addMedication);
+        return aDocument;
     }
 
     public Client toDomain() {
-        return Client.newClient(
+        return Client.with(
                 this.id,
                 this.name,
                 this.email,
                 this.cpf,
-                this.phoneNumber
+                this.phoneNumber,
+                getMedications().stream()
+                        .map(ClientMedicationDocument::toDomain)
+                        .collect(Collectors.toSet())
         );
     }
 
@@ -97,15 +103,15 @@ public class ClientEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    public Set<ClientMedicationEntity> getMedications() {
+    public Set<ClientMedicationDocument> getMedications() {
         return medications;
     }
 
-    public void setMedications(Set<ClientMedicationEntity> medications) {
+    public void setMedications(Set<ClientMedicationDocument> medications) {
         this.medications = medications;
     }
 
     private void addMedication(ClientMedication clientMedication) {
-        getMedications().add(ClientMedicationEntity.of(this, clientMedication));
+        getMedications().add(ClientMedicationDocument.of(clientMedication));
     }
 }

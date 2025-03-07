@@ -20,10 +20,11 @@ public class ClientMedication {
     }
 
     public static ClientMedication newClientMedication(
+            final String id,
             final String clientId,
             final String medicationId,
             final Integer monthlyRenewalDay) {
-        return new ClientMedication(null, clientId, medicationId, monthlyRenewalDay);
+        return new ClientMedication(id, clientId, medicationId, monthlyRenewalDay);
     }
 
     public String id() {
